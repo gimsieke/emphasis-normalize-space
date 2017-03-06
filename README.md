@@ -1,7 +1,7 @@
 # emphasis-normalize-space
 Pull leading or trailing whitespace out of phrasing elements.
 
-Usage scenario: Text that has been converted from word processors or DTP apps. Character styles are often used in these apps to mark up keywords and other phrases of semantic relevance. Mostly for typographic reasons, these apps often include the space character that follows the keyword in the styled content. Example: `<para>A <phrase role="kwd">keyword </phrase>in a paragraph.</para>`. In the resulting XML, these keywords should not contain the trailing whitespace; it needs to be pulled out of the styled content and inserted again after it.
+Usage scenario: In word processing or DTP apps, character styles are often used to mark up keywords and other phrases of semantic relevance. Mostly for typographic reasons, these apps often include the space character that follows the keyword in the styled content. Example: `<para>A <phrase role="kwd">keyword </phrase>in a paragraph.</para>`. In high-level XML content that has been converted from these formats, these keywords typically should not contain the trailing whitespace; it needs to be extracted from the styled content and inserted again after it.
 
 ## Invocation:
 
