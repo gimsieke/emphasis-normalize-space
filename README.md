@@ -63,11 +63,11 @@ The result of applying [lib/naive.xsl](lib/naive.xsl) to the input is shown here
 
 ![naive](img/naive.png)
 
+Please note that this solution does not aim at extracting characters other than whitespace.
+
 ## Issues and solutions
 
-Please note that this solution does not aim at extracting other that whitespace characters.
-
-There are still several issues with it:
+There are several other issues with it:
 
 * Only right-side space normalization is performed. When you also consider left-side normalization, you either need two XSLT passes or you have to test for the case where a text node needs to be processed on [both ends](https://github.com/gimsieke/emphasis-normalize-space/blob/f0c0d6071dd157fb2fbe96e432daa758e546f45f/lib/emphasis-normalize-space.xsl#L154).
 * Instead of trailing whitespace only, some of the non-whitespace element content is repeated outside of the element (example: `Nested phrases with  in it.`. This can be fixed by adding the `'s'` flag to `replace()` so that line breaks count as regular white space.
