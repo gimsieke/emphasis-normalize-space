@@ -57,6 +57,12 @@ When converting the DocBook example with the rich regexes (that contain punctuat
 
 ## Design considerations
 
+This library can serve as an example for using `xsl:next-match` with tunneled parameters.
+
+Also the [“same scope” function](https://github.com/gimsieke/emphasis-normalize-space/blob/f0c0d6071dd157fb2fbe96e432daa758e546f45f/lib/emphasis-normalize-space.xsl#L217) is interesting for other situations where you only want to select a paragraph’s text content and not index terms or paragraphs in footnotes or embedded lists.
+
+Care has been taken to maintain some degree of customizability. One thing that may not be customized easily is the mode that the transformation runs in. If it needs to run in another mode, you probably have to alter the mode attributes manually in your fork.
+
 ### Naïve approach
 
 The result of applying [lib/naive.xsl](lib/naive.xsl) to the input is shown here:
