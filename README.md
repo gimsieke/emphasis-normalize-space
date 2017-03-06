@@ -29,7 +29,7 @@ The default values for the parameters `ens:left-space-regex` and `ens:right-spac
 saxon -xsl:test/test.xsl -s:test/test.xml -o:out.xml {http://www.le-tex.de/namespace/emphasis-normalize-space}ws-only=true
 ```
 
-Instead of calling `test/test.xsl`, you can also call `lib/emphasis-normalize-space.xsl` directly. But then you have to specify the initial mode, `ens:default`, using the curly-brace namespace URI notation. See below for examples.
+Instead of calling [test/test.xsl](test/test.xsl), you can also call [lib/emphasis-normalize-space.xsl](lib/emphasis-normalize-space.xsl) directly. But then you have to specify the initial mode, `ens:default`, using the curly-brace namespace URI notation. See below for examples.
 
 ### Customization
 
@@ -48,3 +48,10 @@ The front ends contain more or less arbitrary assumptions for `$ens:inline-eleme
 ## Compatibility
 
 It has been tested with Saxon HE 9.5.1.2, PE 9.6.0.7, and HE 9.7.0.8.
+
+## Effect
+
+When converting the DocBook example with the rich regexes (that contain punctuation and other space characters) and without typographic wrapper generation, the diff between [original](test/test.xml) and [result](test/out/test.xml) looks like this:
+
+![diff](img/diff_dbk_punctuation_nophrase.png)
+
