@@ -5,7 +5,8 @@
   xmlns:ens="http://www.le-tex.de/namespace/emphasis-normalize-space"
   exclude-result-prefixes="ens xs" version="2.0"> 
 
-  <xsl:template match="*:phrase[matches(., '\s$')]">
+  <xsl:template match="*[local-name() = ('emphasis', 'link', 'phrase')]
+                        [matches(., '\s$')]">
     <xsl:copy>
       <xsl:apply-templates select="@*"/>
       <xsl:value-of select="replace(., '\s+$', '')"/>
