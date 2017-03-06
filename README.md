@@ -65,11 +65,24 @@ Care has been taken to maintain some degree of customizability. One thing that m
 
 ### Naïve approach
 
-The result of applying [lib/naive.xsl](lib/naive.xsl) to the input is shown here:
+In a first approximation, one could use the following template:
+
+```
+<xsl:template match="*[local-name() = ('emphasis', 'link', 'phrase')]
+                        [matches(., '\s$')]">
+    <xsl:copy>
+      <xsl:apply-templates select="@*"/>
+      <xsl:value-of select="replace(., '\s+$', '')"/>
+    </xsl:copy>
+    <xsl:value-of select="replace(., '.+?(\s+)$', '$1')"/>
+  </xsl:template>
+```
+
+The result of applying [this ](lib/naive.xsl) to the input is shown here:
 
 ![naive](img/naive.png)
 
-Please note that this solution does not aim at extracting characters other than whitespace.
+Please note that this solution does not aim at extracting characters other than whitespace, as was seen in the screenshot above.
 
 ## Issues and solutions
 
