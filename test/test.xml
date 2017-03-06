@@ -13,10 +13,11 @@
   <para>Leading spaces<phrase> don’t occur as frequently<emphasis>
         as</emphasis> trailing ones </phrase>in common <glossterm>word
       processor </glossterm>/ <glossterm>DTP </glossterm>output. There’s
-    a non-breaking space in <emphasis>“word processor.” </emphasis>We
-    can expect the <glossterm>authors</glossterm> /
+    a non-breaking space after <emphasis>“word processor.” </emphasis>Can
+    we expect the <glossterm>authors</glossterm> /
       <glossterm>typesetters </glossterm>to place them consciously
-    outside the highlighted term.</para>
+    outside the highlighted term? I think we’ll include <code>\p{Zs}</code>
+  in the <glossterm>regular expression,</glossterm> too.</para>
   <para><link xlink:href="https://en.wikipedia.org/wiki/Hyperlink"
         ><emphasis>Link text </emphasis></link>should be<phrase>
       space-normalized, </phrase>too. And in most cases where whitespace

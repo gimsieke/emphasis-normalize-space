@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?><!--<!DOCTYPE book
+  PUBLIC "-//NLM//DTD BITS Book Interchange DTD with OASIS and XHTML Tables v2.0 20151225//EN"
+  "BITS-book2.dtd">--><book xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:mml="http://www.w3.org/1998/Math/MathML" dtd-version="2.0">
+  <book-meta>
+    <book-title-group>
+      <book-title/>
+    </book-title-group>
+  </book-meta>
+  <book-body>
+    <book-part>
+      <book-part-meta>
+        <title-group>
+          <title/>
+        </title-group>
+      </book-part-meta>
+      <body>
+        <p>Some “<named-content content-type="foo">text</named-content>” here.</p>
+        <p>Nested <named-content content-type="bar"><styled-content style-type="baz">inline</styled-content> markup</named-content>.</p>
+        <p>Paragraph with a footnote<styled-content style-type="fn-marker"><fn>
+        <p>Footnote punctuation should not be pulled out.</p></fn></styled-content>.</p>
+      </body>
+    </book-part>
+  </book-body>
+</book>

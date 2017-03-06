@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-model href="http://docbook.org/xml/5.1/rng/docbook.rng" 
+  schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="http://docbook.org/xml/5.1/sch/docbook.sch" 
+  type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<section xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" version="5.1">
+  <title>Title with <emphasis role="nonbold">highlighting</emphasis> in it</title>
+  <para>More <phrase role="foo">inline markup</phrase> with
+      <emphasis>different whitespace</emphasis> situations. </para>
+  <para><emphasis>Nested <phrase><glossterm>phrases</glossterm> with</phrase>
+      whitespace</emphasis> in it.</para>
+  <para>Leading spaces <phrase>don’t occur as frequently
+        <emphasis>as</emphasis> trailing ones</phrase> in common <glossterm>word
+      processor</glossterm> / <glossterm>DTP</glossterm> output. There’s
+    a non-breaking space after “<emphasis>word processor</emphasis>.” Can
+    we expect the <glossterm>authors</glossterm> /
+      <glossterm>typesetters</glossterm> to place them consciously
+    outside the highlighted term? I think we’ll include <code>\p{Zs}</code>
+  in the <glossterm>regular expression</glossterm>, too.</para>
+  <para><link xlink:href="https://en.wikipedia.org/wiki/Hyperlink"><emphasis>Link text</emphasis></link> should be
+      <phrase>space-normalized</phrase>, too. And in most cases where whitespace
+    normalization is required, there should also be no punctuation
+    within the highlighted <emphasis>segments</emphasis>.
+    (<emphasis>although it might be desirable for typographic
+      reasons</emphasis>).</para>
+  <para>Footnote impose an entirely new class of problems, particularly
+    if they are placed within a <phrase>phrase<footnote>
+        <para>This footnote ends with whitespace. It also contains
+          ignorable WS after this para. The WS should <emphasis>not</emphasis>
+          be naïvely pulled out of the footnote and placed
+          after the surrounding phrase. </para></footnote></phrase>.</para>
+</section>
