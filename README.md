@@ -31,6 +31,10 @@ saxon -xsl:test/test.xsl -s:test/test.xml -o:out.xml {http://www.le-tex.de/names
 
 Instead of calling [test/test.xsl](test/test.xsl), you can also call [lib/emphasis-normalize-space.xsl](lib/emphasis-normalize-space.xsl) directly. But then you have to specify the initial mode, `ens:default`, using the curly-brace namespace URI notation. See below for examples.
 
+### Canonical URI / XML catalogs
+
+If you are using XML catalogs, you can include this repo’s [xmlcatalog/catalog.xml](xmlcatalog/catalog.xml) by virtue of a `nextCatalog` instruction. Then you will be able to import stuff using URIs like `http://www.le-tex.de/resource/emphasis-normalize-space/lib/emphasis-normalize-space.xsl` that do not depend on actual file locations. If a stylesheet (or another resource) is imported/included more than once, it is easier to change the `nextcatalog/@catalog` location in your project than to change each and every occasion where these resources are imported.
+
 ### Customization
 
 There are currently front ends for TEI and JATS/BITS/STS.
