@@ -22,7 +22,7 @@
     select="('content-type', 'style-type')"/>
   
   <xsl:variable name="ens:scope-establishing-elements" as="xs:string*"
-    select="('boxed-tex',
+    select="('boxed-text',
              'td',
              'th',
              'fig', 

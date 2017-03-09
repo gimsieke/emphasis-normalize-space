@@ -40,9 +40,10 @@ or (thanks to standard typecasting rules):
              'entry', 
              'blockquote', 
              'figure', 
-             'footnote', 
+             'footnote',
              'indexterm',
-             'listitem', 
+             'listitem',
+             'sidebar',
              'table')"/>
 
   <xsl:variable name="ens:output-phrase-element-name" as="xs:string" 
@@ -98,10 +99,10 @@ or (thanks to standard typecasting rules):
     <xsl:call-template name="ens:pulled-out-space">
       <xsl:with-param name="string" 
         select="replace(
-                  $shave-left-text-node[not(
-  (: suppress WS that will already :)     some $a in $shave-left-text-nodes
-  (: be rendered by an ancestor :)        satisfies ($a is .)
-                                       )],
+                  $shave-left-text-node 
+                    (: Suppress WS that will already
+                       be rendered by an ancestor: :)
+                    [empty(. intersect $shave-left-text-nodes)],
                   $left-regex, 
                   '$1', 
                   's'
@@ -129,10 +130,10 @@ or (thanks to standard typecasting rules):
     <xsl:call-template name="ens:pulled-out-space">
       <xsl:with-param name="string" 
         select="replace(
-                  $shave-right-text-node[not(
-  (: suppress WS that will already :)     some $a in $shave-right-text-nodes
-  (: be rendered by an ancestor :)        satisfies ($a is .)
-                                       )], 
+                  $shave-right-text-node
+                    (: Suppress WS that will already
+                       be rendered by an ancestor: :)
+                    [empty(. intersect $shave-right-text-nodes)],
                   $right-regex, 
                   '$2', 
                   's'
