@@ -33,7 +33,10 @@ or (thanks to standard typecasting rules):
              'link', 
              'glossterm', 
              'emphasis')"/>
-
+  
+  <xsl:variable name="ens:non-inline-elements-for-normalization" as="xs:string*"
+    select="('keyword')"/>
+  
   <!-- This is also for DocBook: -->
   <xsl:variable name="ens:scope-establishing-elements" as="xs:string*"
     select="('annotation', 
@@ -61,7 +64,7 @@ or (thanks to standard typecasting rules):
 
 
   <xsl:template mode="ens:default"
-    match="*[local-name() = $ens:inline-element-names]
+    match="*[local-name() = ($ens:inline-element-names, $ens:non-inline-elements-for-normalization)]
             [matches(., $ens:left-regex, 's') 
              or 
              matches(., $ens:right-regex, 's')]">
@@ -74,6 +77,7 @@ or (thanks to standard typecasting rules):
       <xsl:with-param name="left-regex" select="$ens:left-regex" tunnel="yes"/>
       <xsl:with-param name="right-regex" select="$ens:right-regex" tunnel="yes"/>
       <xsl:with-param name="both-regex" select="$ens:both-regex" tunnel="yes"/>
+      <xsl:with-param name="discard-pulled-out-space" select="local-name() = $ens:non-inline-elements-for-normalization" tunnel="yes"/>
     </xsl:call-template>
   </xsl:template>
   
@@ -84,6 +88,7 @@ or (thanks to standard typecasting rules):
     <xsl:param name="shave-right-text-nodes" as="text()*" tunnel="yes"/>
     <xsl:param name="left-regex" as="xs:string" tunnel="yes"/>
     <xsl:param name="right-regex" as="xs:string" tunnel="yes"/>
+    <xsl:param name="discard-pulled-out-space" tunnel="yes" as="xs:boolean" select="false()"/>
     <xsl:variable name="same-scope-text" as="text()*" 
       select="descendant::text()[ens:same-scope(., current())]"/>
     <!-- We need the 's' option in case if some of the whitespace/punctuation
@@ -96,18 +101,20 @@ or (thanks to standard typecasting rules):
                                          $right-regex, 's')]"/>
     <!-- Render the whitespace/punctuation part of the leftmost text node
       within the current context (if it starts with whitespace/punctuation): -->
-    <xsl:call-template name="ens:pulled-out-space">
-      <xsl:with-param name="string" 
-        select="replace(
-                  $shave-left-text-node 
-                    (: Suppress WS that will already
-                       be rendered by an ancestor: :)
-                    [empty(. intersect $shave-left-text-nodes)],
-                  $left-regex, 
-                  '$1', 
-                  's'
-                )"/>
-    </xsl:call-template>
+    <xsl:if test="not($discard-pulled-out-space)">
+      <xsl:call-template name="ens:pulled-out-space">
+        <xsl:with-param name="string" 
+          select="replace(
+                    $shave-left-text-node 
+                      (: Suppress WS that will already
+                         be rendered by an ancestor: :)
+                      [empty(. intersect $shave-left-text-nodes)],
+                    $left-regex, 
+                    '$1', 
+                    's'
+                  )"/>
+      </xsl:call-template>
+    </xsl:if>
     <!-- next-match might invoke the identity template but maybe also some
       other template in the current mode (ens:default). Noteworthy observations:
       a) The text nodes that should be stripped of their whitespace/punctuation
@@ -127,22 +134,24 @@ or (thanks to standard typecasting rules):
     </xsl:next-match>
     <!-- Render the whitespace/punctuation part of the rightmost text node
       within the current context (if it ends with whitespace/punctuation): -->
-    <xsl:call-template name="ens:pulled-out-space">
-      <xsl:with-param name="string" 
-        select="replace(
-                  $shave-right-text-node
-                    (: Suppress WS that will already
-                       be rendered by an ancestor: :)
-                    [empty(. intersect $shave-right-text-nodes)],
-                  $right-regex, 
-                  '$2', 
-                  's'
-                )"/>
-    </xsl:call-template>
+    <xsl:if test="not($discard-pulled-out-space)">
+      <xsl:call-template name="ens:pulled-out-space">
+        <xsl:with-param name="string" 
+          select="replace(
+                    $shave-right-text-node
+                      (: Suppress WS that will already
+                         be rendered by an ancestor: :)
+                      [empty(. intersect $shave-right-text-nodes)],
+                    $right-regex, 
+                    '$2', 
+                    's'
+                  )"/>
+      </xsl:call-template>
+    </xsl:if>
   </xsl:template>
   
   <xsl:template mode="ens:default"
-    match="*[local-name() = $ens:inline-element-names]//text()">
+    match="*[local-name() = ($ens:inline-element-names, $ens:non-inline-elements-for-normalization)]//text()">
     <xsl:param name="shave-left-text-nodes" as="text()*" tunnel="yes"/>
     <xsl:param name="shave-right-text-nodes" as="text()*" tunnel="yes"/>
     <xsl:param name="left-regex" as="xs:string?" tunnel="yes"/>
@@ -184,8 +193,8 @@ or (thanks to standard typecasting rules):
           namespace="{$ens:output-phrase-element-namespace}">
           <xsl:attribute name="{$ens:output-role-attribute-name}"
             select="ens:wrapper-role(.)"/>
-          <xsl:if test="matches($string, '^\s')
-                        or matches($string, '\s$')">
+          <xsl:if test="matches($string, '^\s', 's')
+                        or matches($string, '\s$', 's')">
             <xsl:attribute name="xml:space" select="'preserve'"/>
           </xsl:if>
           <xsl:value-of select="$string"/>
