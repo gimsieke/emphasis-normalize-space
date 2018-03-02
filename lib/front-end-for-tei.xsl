@@ -9,6 +9,7 @@
 
   <xsl:variable name="ens:inline-element-names" as="xs:string*"
     select="('add',
+             'del',
              'hi', 
              'link', 
              'distinct',
