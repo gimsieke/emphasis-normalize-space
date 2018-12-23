@@ -201,7 +201,16 @@ or (thanks to standard typecasting rules):
         </xsl:element>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:value-of select="$string"/>
+        <xsl:choose>
+          <xsl:when test="local-name(..) = $ens:scope-establishing-elements">
+            <!-- Assumption: In scope establishing element, only element content is allowed. Therefore typographical space
+              characters need to be discarded -->
+            <xsl:value-of select="replace($string, '\S', '', 's')"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="$string"/>
+          </xsl:otherwise>
+        </xsl:choose>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
