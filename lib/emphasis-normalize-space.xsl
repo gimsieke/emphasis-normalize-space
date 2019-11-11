@@ -94,11 +94,11 @@ or (thanks to standard typecasting rules):
     <!-- We need the 's' option in case if some of the whitespace/punctuation
       that matches the regex is a newline character: -->
     <xsl:variable name="shave-left-text-node" as="text()?"
-      select="($same-scope-text)[1][matches(., 
-                                    $left-regex, 's')]"/>
+      select="($same-scope-text)[1][matches(., $left-regex, 's')]
+                                   [empty(preceding-sibling::*[local-name() = $ens:inline-element-names])]"/>
     <xsl:variable name="shave-right-text-node" as="text()?"
-      select="($same-scope-text)[last()][matches(., 
-                                         $right-regex, 's')]"/>
+      select="($same-scope-text)[last()][matches(., $right-regex, 's')]
+                                        [empty(following-sibling::*[local-name() = $ens:inline-element-names])]"/>
     <!-- Render the whitespace/punctuation part of the leftmost text node
       within the current context (if it starts with whitespace/punctuation): -->
     <xsl:if test="not($discard-pulled-out-space)">

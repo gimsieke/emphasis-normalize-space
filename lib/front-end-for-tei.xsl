@@ -16,6 +16,7 @@
              'emph',
              'foreign',
              'gloss',
+             'seg',
              'name')"/>
   
   <xsl:variable name="ens:non-inline-elements-for-normalization" as="xs:string*"
